@@ -24,4 +24,4 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/cloud-tools:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/cloud-tools:${{ github.tag_name }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/cloud-tools:${{ github.ref_name }}
