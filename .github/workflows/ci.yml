@@ -1,0 +1,23 @@
+name: Pipeline Tools CLI
+on:
+  workflow_dispatch:
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtendo o Código
+        uses: actions/checkout@v6
+      - name: Efetuando Login no Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}  
+      - name: Building and Push Image to Hub Docker
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/cloud-tools:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/cloud-tools:${{ github.tag_name }}
