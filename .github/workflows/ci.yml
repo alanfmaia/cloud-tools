@@ -1,7 +1,10 @@
 name: Pipeline Tools CLI
 on:
   workflow_dispatch:
-    
+
+env:
+  REGISTRY: docker.io
+  IMAGE_NAME: ${{ github.repository }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,6 +19,12 @@ jobs:
 
       - name: Setup Buildx
         uses: docker/setup-buildx-action@v4    
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
        
       - name: Building and Push Image to Hub Docker
         uses: docker/build-push-action@v7
@@ -24,4 +33,4 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/cloud-tools:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/cloud-tools:${{ github.ref_name }}
+            ${{ steps.meta.outputs.tags }}
