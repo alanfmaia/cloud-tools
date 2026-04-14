@@ -5,8 +5,13 @@ on:
 
 jobs:
   build:
-
+    
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+      
     steps:
       - name: Obtendo o Código
         uses: actions/checkout@v6
