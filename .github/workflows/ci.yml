@@ -36,15 +36,6 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/cloud-tools:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/cloud-tools:${{ github.sha }}
 
-  scan:
-  
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      security-events: write
-      actions: read
-      contents: read
-    steps:          
       - name: Executar o Trivy
         uses: aquasecurity/trivy-action@v0.35.0
         with:
@@ -59,5 +50,6 @@ jobs:
         with:
           category: docker-result
           sarif_file: trivy-docker-result.sarif
+
 
       
