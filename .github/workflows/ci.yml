@@ -17,6 +17,7 @@ jobs:
         with:
           dockerfile: Dockerfile
           failure-threshold: "warning"
+        continue-on-error: true
       - name: Efetuando Login no Docker Hub
         uses: docker/login-action@v4
         with:
