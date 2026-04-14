@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:          
       - name: Executar o Trivy
-        uses: aquasecurity/trivy-action@0.35.0
+        uses: aquasecurity/trivy-action@v0.35.0
         with:
           scan-type: "image"
           image-ref: "afmaia/cloud-tools:${{ github.ref_name }}"
@@ -59,7 +59,7 @@ jobs:
           severity: "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
 
       - name: Upload do resultado do Trivy
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           category: docker-result
           sarif_file: trivy-docker-result.sarif
