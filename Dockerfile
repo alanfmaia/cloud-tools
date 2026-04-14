@@ -18,6 +18,6 @@ RUN apk update && apk upgrade --no-cache && apk add --no-cache \
     postgresql17-client \
     mariadb-client \
     kubectl \
-    aws-cli \
+    aws-cli 
 #   helm
-CMD ["sh"]
+CMD ["bash"]
