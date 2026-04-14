@@ -1,7 +1,9 @@
 name: Pipeline Tools CLI
 on:
+  workflow_dispatch:
   push:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
   build:
@@ -48,7 +50,7 @@ jobs:
           severity: "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
 
       - name: Upload do resultado do Trivy
-        uses: github/codeql-action/upload-sarif@v4
+        uses: github/codeql-action/upload-sarif@v3
         with:
           category: docker-result
           sarif_file: trivy-docker-result.sarif
