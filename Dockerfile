@@ -20,4 +20,4 @@ RUN apk update && apk upgrade --no-cache && apk add --no-cache \
     kubectl \
     aws-cli \
 #   helm
-CMD ["bash"]
+CMD ["sh"]
