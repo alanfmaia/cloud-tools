@@ -19,7 +19,7 @@ RUN apk update && apk upgrade --no-cache && apk add --no-cache \
     mariadb-client \
     kubectl \
     aws-cli \
-    helm
+ #   helm
 
 
 CMD ["bash"]
