@@ -2,7 +2,6 @@ name: Pipeline Tools CLI
 on:
   push:
     branches: [ master ]
-    tags: [ 'v*.*.*' ]
 
 jobs:
   build:
@@ -35,25 +34,22 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/cloud-tools:latest
-
-      - name: Push com tag de versão
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/cloud-tools:${{ github.ref_name }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/cloud-tools:${{ github.sha }}
 
   scan:
-    if: github.ref_type == 'tag' && contains(github.event.base_ref, 'master')
+  
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
     steps:          
       - name: Executar o Trivy
         uses: aquasecurity/trivy-action@v0.35.0
         with:
           scan-type: "image"
-          image-ref: "afmaia/cloud-tools:${{ github.ref_name }}"
+          image-ref: "afmaia/cloud-tools:${{ github.sha }}"
           format: "sarif"
           output: "trivy-docker-result.sarif"
           severity: "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
