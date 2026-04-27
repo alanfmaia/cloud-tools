@@ -1,9 +1,10 @@
 name: Pipeline Tools CLI
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - master
+    branches: [ master ]
+    paths-ignore:
+      - '.github/workflows/**'
+
 
 jobs:
   build:
@@ -37,8 +38,8 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/cloud-tools:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/cloud-tools:${{ github.sha }}
+            ${{github.repository}}:latest
+            ${{github.repository}}:${{ github.sha }}
 
       - name: Executar o Trivy
         uses: aquasecurity/trivy-action@v0.35.0
